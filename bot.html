@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PC Ảo – API cho bot / Bot API</title><link rel="icon" href="icons/icon.svg">
+<style>body{font:15px/1.6 system-ui,sans-serif;max-width:900px;margin:0 auto;padding:16px;color:#1b1f2a;background:#f6f8fc}code,pre{font:13px ui-monospace,monospace;background:#e9eef7;border-radius:4px;padding:1px 4px;word-break:break-all}pre{padding:10px;overflow:auto;white-space:pre-wrap}table{border-collapse:collapse;width:100%;background:#fff}td,th{border:1px solid #d5dbe7;padding:6px;vertical-align:top;text-align:left}h1,h2{color:#123a8a}.en{color:#555}.warn{background:#fff4d6;border:1px solid #f0c24b;padding:10px;border-radius:6px}li{margin:6px 0}</style></head>
+<body>
+<h1>PC Ảo – điều khiển bằng link <span class="en">/ drive it with a link</span></h1>
+<p>PC Ảo là giả lập máy tính kiểu Windows 11 siêu nhẹ (HTML/CSS/JS thuần, không thư viện). Bot hoặc công cụ tự động chỉ cần mở một đường link có tham số là máy tự chạy lệnh và ghi kết quả vào DOM.<br>
+<span class="en">PC Ảo is a super-light Windows-11-style PC simulator (plain HTML/CSS/JS, no libraries). A bot only has to open a link with parameters; the actions run after boot and results are mirrored into the DOM.</span></p>
+<p>Trang chính / Main app: <a href="./">https://yosimura99.github.io/pc-ao/</a> · Tóm tắt cho LLM / LLM summary: <a href="llms.txt">llms.txt</a></p>
+<p class="warn"><b>Ứng dụng «Gợi ý trả lời» KHÔNG kết nối với Tinder hay bất kỳ dịch vụ hẹn hò hoặc nhắn tin nào khác, và KHÔNG tự động gửi bất cứ thứ gì.</b> Nó chỉ chạy offline trong trình duyệt bằng luật và mẫu câu có sẵn; bạn tự sao chép và tự gửi.<br><b>The “Gợi ý trả lời” (reply suggester) app does NOT connect to Tinder or any other dating or messaging service, and does NOT send anything automatically.</b> It runs offline in your browser using built-in rules and templates; you copy and send replies yourself.</p>
+<h2>Ví dụ / Examples</h2><ol><li>Mở Notepad, tạo thư mục và liệt kê / Open Notepad, make a folder and list<br><a href="https://yosimura99.github.io/pc-ao/?skipboot=1&amp;run=notepad&amp;cmd=mkdir%20test%3Bls"><code>https://yosimura99.github.io/pc-ao/?skipboot=1&amp;run=notepad&amp;cmd=mkdir%20test%3Bls</code></a></li>
+<li>Gợi ý trả lời / Reply suggestions<br><a href="https://yosimura99.github.io/pc-ao/?skipboot=1&amp;run=reply&amp;msg=Ch%C3%A0o%20em%2C%20cu%E1%BB%91i%20tu%E1%BA%A7n%20r%E1%BA%A3nh%20%C4%91i%20c%C3%A0%20ph%C3%AA%20kh%C3%B4ng%3F"><code>https://yosimura99.github.io/pc-ao/?skipboot=1&amp;run=reply&amp;msg=Ch%C3%A0o%20em%2C%20cu%E1%BB%91i%20tu%E1%BA%A7n%20r%E1%BA%A3nh%20%C4%91i%20c%C3%A0%20ph%C3%AA%20kh%C3%B4ng%3F</code></a></li>
+<li>Ghi tệp và mở bằng Notepad / Write a file and open it<br><a href="https://yosimura99.github.io/pc-ao/?skipboot=1&amp;file=/T%C3%A0i%20li%E1%BB%87u/a.txt&amp;text=Xin%20ch%C3%A0o%20t%E1%BB%AB%20bot%21"><code>https://yosimura99.github.io/pc-ao/?skipboot=1&amp;file=/T%C3%A0i%20li%E1%BB%87u/a.txt&amp;text=Xin%20ch%C3%A0o%20t%E1%BB%AB%20bot%21</code></a></li>
+<li>Giao diện sáng + hình nền + trình duyệt / Light theme, wallpaper, browser<br><a href="https://yosimura99.github.io/pc-ao/?skipboot=1&amp;theme=light&amp;wallpaper=sunset&amp;url=https%3A%2F%2Fexample.com"><code>https://yosimura99.github.io/pc-ao/?skipboot=1&amp;theme=light&amp;wallpaper=sunset&amp;url=https%3A%2F%2Fexample.com</code></a></li>
+<li>Máy tính / Calculator<br><a href="https://yosimura99.github.io/pc-ao/?skipboot=1&amp;calc=%2812%2B8%29%2A3/4"><code>https://yosimura99.github.io/pc-ao/?skipboot=1&amp;calc=%2812%2B8%29%2A3/4</code></a></li>
+<li>Kịch bản JSON / JSON script<br><a href="https://yosimura99.github.io/pc-ao/?skipboot=1&amp;script=%5B%7B%22run%22%3A%22calc%22%7D%2C%7B%22cmd%22%3A%22ls%22%7D%2C%7B%22wait%22%3A500%7D%2C%7B%22msg%22%3A%22anh%20l%C3%A0m%20ngh%E1%BB%81%20g%C3%AC%20v%E1%BA%ADy%22%7D%5D"><code>https://yosimura99.github.io/pc-ao/?skipboot=1&amp;script=%5B%7B%22run%22%3A%22calc%22%7D%2C%7B%22cmd%22%3A%22ls%22%7D%2C%7B%22wait%22%3A500%7D%2C%7B%22msg%22%3A%22anh%20l%C3%A0m%20ngh%E1%BB%81%20g%C3%AC%20v%E1%BA%ADy%22%7D%5D</code></a></li>
+<li>Dùng hash thay cho query / Hash instead of query<br><a href="https://yosimura99.github.io/pc-ao/#skipboot=1&amp;run=terminal&amp;cmd=neofetch"><code>https://yosimura99.github.io/pc-ao/#skipboot=1&amp;run=terminal&amp;cmd=neofetch</code></a></li></ol>
+<h2>Tham số URL / URL parameters</h2>
+<p>Dùng được cả <code>?a=b</code> lẫn <code>#a=b</code> (hash ghi đè query). Nhớ URL-encode giá trị. <span class="en">Both query and hash work (hash overrides). URL-encode values.</span></p>
+<table><tr><th>Tham số / Param</th><th>Ý nghĩa / Meaning</th></tr>
+<tr><td><code>skipboot=1</code></td><td>Bỏ qua màn khởi động và màn khóa. <span class="en">Skip boot + lock screen instantly. (With any action param the lock screen is auto-dismissed after a ~0.75 s boot anyway.)</span></td></tr>
+<tr><td><code>run=id1,id2</code></td><td>Mở ứng dụng. <span class="en">Open apps.</span> IDs: <code>explorer, notepad, terminal, calc, browser, settings, reply</code> (alias: files, note, cmd, shell, calculator, web, caidat, goiy…)</td></tr>
+<tr><td><code>cmd=lệnh1;lệnh2</code></td><td>Chạy lệnh Terminal, ngăn bằng <code>;</code>. Kết quả vào <code>#bot-output</code>. <span class="en">Run terminal commands separated by <code>;</code> (max 50). Output goes to <code>#bot-output</code>.</span> Lệnh: help, ls, cd, pwd, mkdir, touch, cat, echo (&gt; &gt;&gt;), rm [-r], mv, open, apps, theme, wallpaper, date, whoami, history, clear, neofetch, reply</td></tr>
+<tr><td><code>file=/đường/dẫn.txt&amp;text=...</code></td><td>Ghi tệp (thư mục cha phải tồn tại) rồi mở bằng Notepad. Chỉ <code>file</code>: mở tệp/thư mục có sẵn. <span class="en">Write a text file (parent folder must exist) and open it in Notepad. <code>file</code> alone opens an existing file/folder. Text is inserted with textContent/value only — never parsed as HTML.</span></td></tr>
+<tr><td><code>url=https://...</code></td><td>Mở trong Trình duyệt. Chỉ http/https; tên miền trần được thêm https://, chữ khác thành tìm kiếm Wikipedia. <span class="en">Open in the Browser app. Only http/https; anything else is rejected or turned into a Wikipedia search. Many sites forbid iframes — use the “Mở tab mới” button.</span></td></tr>
+<tr><td><code>msg=...</code></td><td>Mở «Gợi ý trả lời» và đặt mảng JSON gợi ý vào <code>#bot-output</code>. <span class="en">Open the reply suggester; a JSON array <code>[{tone,intent,text}]</code> goes to <code>#bot-output</code>.</span></td></tr>
+<tr><td><code>calc=biểu thức</code></td><td>Tính bằng Máy tính (bộ phân tích an toàn, không eval). <span class="en">Evaluate with the Calculator (safe parser, no eval).</span> + - * / % ( )</td></tr>
+<tr><td><code>theme=dark|light</code></td><td>Giao diện tối/sáng. <span class="en">Dark/light theme.</span></td></tr>
+<tr><td><code>wallpaper=</code></td><td><code>bloom, sunset, ocean, forest, night, pastel</code></td></tr>
+<tr><td><code>accent=</code></td><td><code>xanh, tim, hong, do, cam, la</code></td></tr>
+<tr><td><code>close=app|winId|all</code></td><td>Đóng cửa sổ. <span class="en">Close windows.</span></td></tr>
+<tr><td><code>script=[...]</code></td><td>Mảng JSON các bước (tối đa 50), chạy tuần tự. <span class="en">URL-encoded JSON array of steps (max 50), run in order.</span> Khóa hợp lệ / allowed keys: <code>run, open, close, cmd, file, text, url, theme, wallpaper, accent, msg, calc, wait (≤10000 ms), power (sleep|shutdown|restart), maximize, minimize, focus</code>. Khóa khác bị từ chối. <span class="en">Any other key is rejected.</span><pre>[{"run":"calc"},{"cmd":"ls"},{"wait":500},{"msg":"chào em"},{"maximize":"reply"}]</pre></td></tr>
+</table>
+<p>Thứ tự xử lý / processing order: theme, wallpaper, accent → run → file/text → url → calc → msg → script → cmd → close.</p>
+<h2>Kết quả trong DOM / Results in the DOM</h2>
+<ul>
+<li><code>body[data-ready="1"]</code> khi mọi bước xong; cũng có sự kiện <code>pcao:ready</code>. <span class="en">Set when all steps are done; a <code>pcao:ready</code> event fires too.</span></li>
+<li><code>&lt;pre id="bot-output"&gt;</code> – kết quả bước cuối cùng. <span class="en">Result of the last step. <code>body[data-last-output-at]</code> is updated each time.</span></li>
+<li><code>&lt;pre id="bot-log"&gt;</code> – JSON mọi bước <code>[{step,ok,result|error}]</code>.</li>
+<li><code>&lt;pre id="bot-state"&gt;</code> – JSON trạng thái (cửa sổ, giao diện, cwd…). <span class="en">Live JSON state.</span></li>
+<li>Cửa sổ <code>.win</code> có / windows carry <code>data-app, data-win-id, data-state, data-title, data-focused</code>, và tùy app / plus <code>data-file, data-path, data-cwd, data-url, data-result, data-suggestions</code>.</li>
+</ul>
+<h2>API JavaScript / JavaScript API (<code>window.pcAo</code>)</h2>
+<p>Cho Puppeteer/Playwright. <span class="en">For Puppeteer/Playwright via <code>page.evaluate</code>.</span></p>
+<pre>await pcAo.ready                      // kết quả các bước từ URL / results of URL steps
+pcAo.version                          // "1.0.0"
+pcAo.listApps()                       // [{id,name}]
+pcAo.open("notepad", arg?)            // → window id
+pcAo.close("notepad" | "w3" | "all")
+pcAo.exec("ls /Tài liệu")             // → output string (also #bot-output)
+pcAo.terminal("mkdir a;cd a;pwd")     // runs in the visible Terminal
+pcAo.writeFile("/Tài liệu/a.txt", "nội dung")
+pcAo.readFile("/Tài liệu/a.txt")
+pcAo.ls("/"), pcAo.mkdir(p), pcAo.rm(p), pcAo.openFile(p)
+pcAo.browse("https://example.com")    // http/https only
+pcAo.reply("anh làm nghề gì vậy")     // → [{tone,intent,text}]
+pcAo.calc("2+3*4")                    // → 14
+pcAo.setTheme("light"), pcAo.setWallpaper("ocean"), pcAo.setAccent("tim"), pcAo.wallpapers()
+await pcAo.run([{"run":"calc"},{"calc":"1+1"}])   // same whitelist as script=
+pcAo.state()                          // JSON state
+await pcAo.screenshot()               // → PNG data URL (DOM rendered via SVG foreignObject; iframes shown as placeholder)
+pcAo.unlock()</pre>
+<h2>Bảo mật / Security</h2>
+<ul><li>Không bao giờ eval JS từ URL; chỉ chạy các hành động trong danh sách trắng. <span class="en">Nothing from the URL is ever eval'd; only whitelisted actions run.</span></li>
+<li>Văn bản từ tham số chỉ được chèn bằng <code>textContent</code>/<code>value</code>. <span class="en">Text from params is inserted via textContent/value only.</span></li>
+<li>Trình duyệt chỉ tải http/https. <span class="en">The Browser app only loads http/https URLs.</span></li>
+<li>Dữ liệu (tệp ảo, cài đặt) chỉ nằm trong localStorage của trình duyệt bạn. <span class="en">Files and settings live only in your browser's localStorage. No backend, no API keys.</span></li></ul>
+<p class="warn"><b>Ứng dụng «Gợi ý trả lời» KHÔNG kết nối với Tinder hay bất kỳ dịch vụ hẹn hò hoặc nhắn tin nào khác, và KHÔNG tự động gửi bất cứ thứ gì.</b> Nó chỉ chạy offline trong trình duyệt bằng luật và mẫu câu có sẵn; bạn tự sao chép và tự gửi.<br><b>The “Gợi ý trả lời” (reply suggester) app does NOT connect to Tinder or any other dating or messaging service, and does NOT send anything automatically.</b> It runs offline in your browser using built-in rules and templates; you copy and send replies yourself.</p>
+</body></html>

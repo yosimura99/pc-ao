@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="vi" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<title>PC Ảo – máy tính giả lập trên web</title>
+<meta name="description" content="PC Ảo: máy tính giả lập kiểu Windows 11 chạy trên trình duyệt, điều khiển được bằng liên kết (bot API). Xem bot.html.">
+<meta name="theme-color" content="#0b1d4d">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="PC Ảo">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/svg+xml" href="icons/icon.svg">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="help" href="bot.html" title="Bot API">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="desktop" aria-label="Màn hình nền">
+  <div id="icons"></div>
+  <div id="windows"></div>
+  <div id="startmenu" class="hidden" role="dialog" aria-label="Start">
+    <input id="startsearch" type="search" placeholder="Tìm ứng dụng, cài đặt…" autocomplete="off">
+    <div class="sm-label">Đã ghim</div>
+    <div id="startgrid"></div>
+    <div class="sm-foot">
+      <div class="sm-user"><span class="avatar">K</span><span>Khách</span></div>
+      <button id="powerbtn" class="iconbtn" title="Nguồn" aria-label="Nguồn"><svg viewBox="0 0 24 24" width="20" height="20"><path d="M12 3v9M6.3 6.3a8 8 0 1 0 11.4 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+      <div id="powermenu" class="menu hidden">
+        <button data-power="sleep">Ngủ</button>
+        <button data-power="shutdown">Tắt máy</button>
+        <button data-power="restart">Khởi động lại</button>
+      </div>
+    </div>
+  </div>
+  <div id="ctxmenu" class="menu hidden"></div>
+  <div id="taskbar">
+    <div id="tb-center">
+      <button id="startbtn" class="tb-btn" title="Start" aria-label="Start"><svg viewBox="0 0 24 24" width="24" height="24"><rect x="2" y="2" width="9.5" height="9.5" rx="1.5" fill="#4cc2ff"/><rect x="12.5" y="2" width="9.5" height="9.5" rx="1.5" fill="#2ea6f2"/><rect x="2" y="12.5" width="9.5" height="9.5" rx="1.5" fill="#2ea6f2"/><rect x="12.5" y="12.5" width="9.5" height="9.5" rx="1.5" fill="#1683d8"/></svg></button>
+      <div id="tb-apps"></div>
+    </div>
+    <div id="tb-right"><div id="clock"><span id="clock-t"></span><span id="clock-d"></span></div></div>
+  </div>
+</div>
+<div id="lock" class="hidden" role="button" aria-label="Chạm để mở khóa">
+  <div class="lock-time" id="lock-t"></div><div class="lock-date" id="lock-d"></div>
+  <div class="lock-hint">Chạm hoặc nhấn phím để mở khóa</div>
+</div>
+<div id="boot">
+  <svg viewBox="0 0 24 24" width="72" height="72"><rect x="2" y="2" width="9.5" height="9.5" rx="1" fill="#4cc2ff"/><rect x="12.5" y="2" width="9.5" height="9.5" rx="1" fill="#4cc2ff"/><rect x="2" y="12.5" width="9.5" height="9.5" rx="1" fill="#4cc2ff"/><rect x="12.5" y="12.5" width="9.5" height="9.5" rx="1" fill="#4cc2ff"/></svg>
+  <div class="boot-name">PC Ảo</div>
+  <div class="bootbar"><i></i></div>
+  <div class="boot-hint">Chạm để bỏ qua</div>
+</div>
+<pre id="bot-output" hidden></pre>
+<pre id="bot-state" hidden></pre>
+<pre id="bot-log" hidden></pre>
+<script src="app.js"></script>
+</body>
+</html>

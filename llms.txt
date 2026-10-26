@@ -1,0 +1,35 @@
+# PC Ảo
+> Super-light Windows-11-style PC simulator in the browser (Vietnamese UI). Drive it entirely with URL parameters; results are written to the DOM. No backend, no API keys.
+
+Main: https://yosimura99.github.io/pc-ao/
+Full docs (vi + en): https://yosimura99.github.io/pc-ao/bot.html
+
+## URL parameters (query `?` or hash `#`; URL-encode values)
+- skipboot=1 — skip boot/lock screen
+- run=explorer,notepad,terminal,calc,browser,settings,reply — open apps
+- cmd=ls;mkdir a;cd a;pwd — terminal commands separated by `;`
+- file=/Tài liệu/a.txt&text=... — write a file and open it in Notepad (file alone opens it)
+- url=https://example.com — Browser app (http/https only)
+- msg=... — reply suggester; JSON array [{tone,intent,text}] goes to #bot-output
+- calc=(1+2)*3 — calculator (safe parser)
+- theme=dark|light, wallpaper=bloom|sunset|ocean|forest|night|pastel, accent=xanh|tim|hong|do|cam|la
+- close=app|winId|all
+- script=[{"run":"calc"},{"cmd":"ls"},{"wait":500}] — URL-encoded JSON steps; allowed keys: run, open, close, cmd, file, text, url, theme, wallpaper, accent, msg, calc, wait, power, maximize, minimize, focus
+
+## Reading results
+- Wait for `body[data-ready="1"]` (or the `pcao:ready` event / `await pcAo.ready`)
+- `#bot-output` (pre): last result. `#bot-log`: JSON of every step. `#bot-state`: JSON state.
+- JS API: window.pcAo.{open, close, exec, terminal, writeFile, readFile, ls, mkdir, rm, openFile, browse, reply, calc, setTheme, setWallpaper, setAccent, run, state, screenshot, listApps, unlock}
+
+## Examples
+- Mở Notepad, tạo thư mục và liệt kê / Open Notepad, make a folder and list: https://yosimura99.github.io/pc-ao/?skipboot=1&run=notepad&cmd=mkdir%20test%3Bls
+- Gợi ý trả lời / Reply suggestions: https://yosimura99.github.io/pc-ao/?skipboot=1&run=reply&msg=Ch%C3%A0o%20em%2C%20cu%E1%BB%91i%20tu%E1%BA%A7n%20r%E1%BA%A3nh%20%C4%91i%20c%C3%A0%20ph%C3%AA%20kh%C3%B4ng%3F
+- Ghi tệp và mở bằng Notepad / Write a file and open it: https://yosimura99.github.io/pc-ao/?skipboot=1&file=/T%C3%A0i%20li%E1%BB%87u/a.txt&text=Xin%20ch%C3%A0o%20t%E1%BB%AB%20bot%21
+- Giao diện sáng + hình nền + trình duyệt / Light theme, wallpaper, browser: https://yosimura99.github.io/pc-ao/?skipboot=1&theme=light&wallpaper=sunset&url=https%3A%2F%2Fexample.com
+- Máy tính / Calculator: https://yosimura99.github.io/pc-ao/?skipboot=1&calc=%2812%2B8%29%2A3/4
+- Kịch bản JSON / JSON script: https://yosimura99.github.io/pc-ao/?skipboot=1&script=%5B%7B%22run%22%3A%22calc%22%7D%2C%7B%22cmd%22%3A%22ls%22%7D%2C%7B%22wait%22%3A500%7D%2C%7B%22msg%22%3A%22anh%20l%C3%A0m%20ngh%E1%BB%81%20g%C3%AC%20v%E1%BA%ADy%22%7D%5D
+- Dùng hash thay cho query / Hash instead of query: https://yosimura99.github.io/pc-ao/#skipboot=1&run=terminal&cmd=neofetch
+
+## Notes
+- No JavaScript from the URL is ever evaluated; only whitelisted actions. Param text is inserted via textContent.
+- The reply suggester ("Gợi ý trả lời") does NOT connect to Tinder or any other dating or messaging service and does NOT send anything automatically. It only suggests text offline.
